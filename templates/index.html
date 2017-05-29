@@ -3,12 +3,12 @@
 <h2>posts by month</h2>
 
 <ul>
-    {% for month, count in months %}
+    {% for month in months %}
     <li>
-        <a href="/month/{{ month[0] }}/{{ month[1] }}">
-            {{ month[0] }} - {{ month[1] }}
+        <a href="/month/{{ month.year }}/{{ month.month_month }}">
+            {{ month.month }}
         </a>
-        ({{ count }})
+        ({{ month.count }})
     </li>
     {% endfor %}
 </ul>
@@ -16,12 +16,12 @@
 <h2>posts by tag</h2>
 
 <ul>
-    {% for tag, count in tags %}
+    {% for tag in tags %}
     <li>
-        <a href="/tagged/{{ tag }}">
-            {{ tag }}
+        <a href="/tagged/{{ tag[0] }}">
+            {{ tag[0] }}
         </a>
-        ({{ count }})
+        ({{ tag.count }})
     </li>
     {% endfor %}
 </ul>

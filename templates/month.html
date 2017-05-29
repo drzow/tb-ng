@@ -1,14 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-<h2>days in {{ month[0] }} - {{ month[1] }}</h2>
+<h2>posts in {{ month[0] }} - {{ month[1] }}</h2>
 
-<ul>
-    {% for day in days %}
-    <li>
-        <a href="/posts/{{ day}}">
-            {{ day }}
-        </a>
-    </li>
-    {% endfor %}
-</ul>
+{% include "posts.html" %}
 {% endblock %}
