@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>posts by month</h2>
+
+<ul>
+    {% for month, count in months %}
+    <li>
+        <a href="/month/{{ month[0] }}/{{ month[1] }}">
+            {{ month[0] }} - {{ month[1] }}
+        </a>
+        ({{ count }})
+    </li>
+    {% endfor %}
+</ul>
+
+<h2>posts by tag</h2>
+
+<ul>
+    {% for tag, count in tags %}
+    <li>
+        <a href="/tagged/{{ tag }}">
+            {{ tag }}
+        </a>
+        ({{ count }})
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}

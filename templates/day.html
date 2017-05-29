@@ -1,0 +1,11 @@
+{% extends "layout.html" %}
+{% block content %}
+<h2>posts in {{ day }}</h2>
+<ul>
+    {% for post in posts %}
+    <li>
+        <a href="/posts/{{ post[0] }}/{{ post[1] }}">{{ post[2] }}</a>
+    </li>
+    {% endfor %}
+</ul>
+{% endblock %}
