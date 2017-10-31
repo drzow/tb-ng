@@ -43,7 +43,7 @@ class Post(sqlite3.Row):
     def photos(self):
         """Decode the photos associated with this post (if any)
         """
-        return json.loads(self['photos'])
+        return json.loads(self['photos']) or []
 
 database.row_factory = Post
 
