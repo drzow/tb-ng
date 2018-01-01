@@ -10,7 +10,10 @@ import yaml
 from bs4 import BeautifulSoup
 
 apiKey = 'WbsJ956UmHw5jX6dkt0EshzhUbbU2tZ3LrLk19QGlysmrZrMS2'
-config = yaml.load(open('./config.yaml', 'r'))
+config = {
+    'filter_tags': []
+}
+config.update(yaml.load(open('./config.yaml', 'r')))
 print(config)
 
 if 'state' not in config:
@@ -71,6 +74,14 @@ while True:
                 'id': post['id'],
                 'tags': post['tags'],
             }
+            # Filter Tags
+            skip = False
+            for tag in config['filter_tags']:
+                if tag not in post['tags']:
+                    print('>> Skipping post as it is not tagged {}'.format(tag))
+                    skip = True
+            if skip:
+                continue
             # Normalise posts into yaml format for easy re-rendering
             if post['type'] == 'photo':
                 data['caption'] = process_caption(post['caption'], post)
