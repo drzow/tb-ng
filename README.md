@@ -14,7 +14,7 @@ just backup a tag and have incermental backups.
 3. Add a `config.yml` file to the directory you want to backup in
 4. Run `backup-tumblr.py` and wait for it to finish
 
-The config.yml file includes the following:
+The config.yaml file includes the following:
 
 ```yaml
 blog: staff.tumblr.com
