@@ -2,8 +2,10 @@
 """Backup tumblr
 """
 import hashlib
+import json
 import os
 import os.path
+import re
 
 import requests
 import yaml
@@ -44,7 +46,25 @@ def process_caption(caption, post):
     soup = BeautifulSoup(caption, 'html.parser')
     for image in soup.find_all('img'):
         image['src'] = download_image(image['src'], post)
-    return str(soup)
+    for embeddedvid in soup.find_all('figure'):
+        try:
+            # Remove the surrounding quotes from the data-npf element of the tag
+            data_npf = re.sub(r'^['"]+|["']+$', '', embeddedvid['data-npf'])
+            # unescape any quotes in the remaining string
+            data_npf = re.sub(r'\"', '"', data_npf)
+            # decode the json content as a dictionary
+            data_npf_dict = json.loads(data_npf)
+            # extract the url, and download it
+            data_npf_dict['url'] = download_image(data_npf_dict['url'], post)
+            # propigate the url to media/url
+            data_npf_dict['media']['url'] = data_npf_dict['url']
+            # reconstruct the data_npf
+            data_npf = "''" + json.dumps(data_npf_dict) + "''"
+            # and stick the updated data_npf back into the figure tag
+            embeddedvid['data-npf'] = data_npf
+        except KeyError:
+            next
+    return soup.prettify(formatter="minimal")
 
 first_id = None
 
@@ -109,6 +129,7 @@ while True:
                     'url': post.get('permalink_url', post.get('video_url', None)),
                 }
                 data['caption'] = process_caption(post['caption'], post)
+                data['videofile'] = download_image(post.get('permalink_url', post.get('video_url', None)), post)
             else:
                 print('> post type {} not handled'.format(post['type']))
             filename = './posts/{}/{}.yaml'.format(post['date'][:10], post['id'])
