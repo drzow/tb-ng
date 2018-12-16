@@ -2,6 +2,10 @@
 
 Tumblr Backup Next Generation
 
+This is branched from https://gitlab.com/kennydude/tb-ng with some fixes,
+updates, and improved video support. Everything below this is from the
+original author.
+
 This is a new version of tumblr-backup, a script I wrote in NodeJS to backup a tumblr.
 
 This version is written in Python, and it is a lot better including the ability to
