@@ -25,22 +25,26 @@ if 'state' not in config:
     }
 
 def download_image(url, post):
-    filename = './images/{}/{}.{}'.format(
-        post['date'][:10], hashlib.sha256(url.encode('ascii')).hexdigest(),
-        url.split('.')[-1])
-    print('> Download {}'.format(url))
-    r = requests.get(url, stream=True)
-    if r.status_code == 200:
-        dirname = os.path.dirname(filename)
-        if not os.path.exists(dirname):
-            os.makedirs(dirname)
-        with open(filename, 'wb') as f:
-            for part in r:
-                f.write(part)
-        return filename
-    else:
-        print('>> Fail postid: {} image: {}'.format(post['id'], url))
-        return url
+    try:
+       filename = './images/{}/{}.{}'.format(
+           post['date'][:10], hashlib.sha256(url.encode('ascii')).hexdigest(),
+           url.split('.')[-1])
+       print('> Download {}'.format(url))
+       r = requests.get(url, stream=True)
+       if r.status_code == 200:
+           dirname = os.path.dirname(filename)
+           if not os.path.exists(dirname):
+               os.makedirs(dirname)
+           with open(filename, 'wb') as f:
+               for part in r:
+                   f.write(part)
+           return filename
+       else:
+           print('>> Fail postid: {} image: {}'.format(post['id'], url))
+           return url
+    except AttributeError:
+       print('>> Fail postid: {} image: {}'.format(post['id'], url))
+       return url
 
 def process_caption(caption, post):
     soup = BeautifulSoup(caption, 'html.parser')
