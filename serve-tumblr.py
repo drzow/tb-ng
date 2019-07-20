@@ -19,7 +19,7 @@ app = Flask(__name__, root_path=thisdir)
 
 # Index
 print('> Indexing content...')
-database = sqlite3.connect(':memory:')
+database = sqlite3.connect(':memory:', check_same_thread=False)
 
 class Post(sqlite3.Row):
     """Extension of sqlite3 row to include some generic tumblr stuff
