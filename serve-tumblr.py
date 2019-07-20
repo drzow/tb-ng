@@ -60,7 +60,7 @@ for day in days:
         if post[0] == '.':
             continue
         fname = 'posts/{}/{}'.format(day, post)
-        data = yaml.load(open(fname, 'r').read())
+        data = yaml.load(open(fname, 'r').read(), Loader=yaml.SafeLoader)
         database.execute(
             'INSERT INTO posts (caption, created, month, id, photos, url) VALUES (?, ?, ?, ?, ?, ?)',
             [
