@@ -15,7 +15,7 @@ apiKey = 'WbsJ956UmHw5jX6dkt0EshzhUbbU2tZ3LrLk19QGlysmrZrMS2'
 config = {
     'filter_tags': []
 }
-config.update(yaml.load(open('./config.yaml', 'r')))
+config.update(yaml.load(open('./config.yaml', 'r'), Loader=yaml.SafeLoader))
 print(config)
 
 if 'state' not in config:
